@@ -28,6 +28,15 @@ router.get("/districts", async (req, res) => {
     }
 });
 
+router.get("/districts/data", async (req, res) => {
+    try {
+        const weatherData = await Weather.find();
+        res.status(200).json(weatherData);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
 router.put("/districts/:id", async (req, res) => {
     try {
         const updatedWeather = await Weather.findByIdAndUpdate(req.params.id, {
