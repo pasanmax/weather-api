@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const WeatherSchema = new mongoose.Schema({
-    country: { type: String, required: true, unique: true },
     district: { type: String, required: true, unique: true },
-    temperature: { type: Number },
-    humidity: { type: Number },
-    airPressure: { type: Number },
+    cordinates: { type: Array, required: true },
+    temperature: { type: Number, default: 0 },
+    humidity: { type: Number, default: 0 },
+    airPressure: { type: Number, default: 0 },
 }, {timestamps: true});
 
 module.exports = mongoose.model("Weather", WeatherSchema);

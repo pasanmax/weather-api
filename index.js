@@ -2,7 +2,10 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cron = require('node-cron');
 const authRoute = require("./routes/auth");
+const weatherRoute = require("./routes/weather");
+const dataGenerator = require('./data-generators/generator');
 
 dotenv.config();
 
@@ -15,9 +18,15 @@ mongoose.connect(process.env.MONGO_URL)
 
 app.use(express.json());
 
-app.use("/weather/api/auth", authRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/weather", weatherRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`API is running on port ${PORT}!`);
 });
+
+cron.schedule("*/1 * * * *", function() {
+    dataGenerator.saveRandomValuesToDatabase();
+});
+
