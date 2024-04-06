@@ -28,7 +28,7 @@ async function getDistrictsFromDatabase() {
             'token': process.env.token
         };
 
-        const response = await axios.get(process.env.API_URL, { headers })
+        const response = await axios.get(process.env.API_URL_PROD, { headers })
             .then(res => { return res.data });
 
         //this.districts = response;
@@ -62,7 +62,7 @@ async function getDistrictsFromDatabase() {
                 'token': process.env.token
             };
 
-            await axios.put(process.env.API_URL + data._id, bodyData, { headers }).then(res => {
+            await axios.put(process.env.API_URL_PROD + data._id, bodyData, { headers }).then(res => {
                 //console.log("Updated data");
             })
 
