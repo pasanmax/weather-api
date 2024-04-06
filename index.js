@@ -7,6 +7,8 @@ const cors = require('cors');
 const authRoute = require("./routes/auth");
 const weatherRoute = require("./routes/weather");
 const dataGenerator = require('./data-generators/generator');
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
 dotenv.config();
 
@@ -15,6 +17,37 @@ mongoose.connect(process.env.MONGO_URL)
 .catch((err) => {
     console.log(err);
 });
+
+const options = {
+    definition: {
+      openapi: "3.1.0",
+      info: {
+        title: "Weather API",
+        version: "1.0.0",
+        description:
+          "Weather API that demonstrate real-time weather information in Sri Lanka",
+        contact: {
+          name: "Pasan Anjana Hettiarachchi",
+          url: "https://github.com/pasanmax",
+          email: "pasan.anjana98@outlook.com",
+        },
+      },
+      servers: [
+        {
+          url: "http://localhost:5000/api",
+        },
+      ],
+    },
+    apis: ["./routes/*.js"],
+  };
+  
+  
+  const specs = swaggerJsdoc(options);
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(specs)
+  );
 
 app.use(cors());
 app.use(express.json());
