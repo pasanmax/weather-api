@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Weather = require("../models/Weather");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
+const { verifyToken } = require("./verifyToken");
 
 
 router.post("/", async (req,res) => {
@@ -17,7 +18,7 @@ router.post("/", async (req,res) => {
 
 });
 
-router.get("/districts", async (req, res) => {
+router.get("/districts", verifyToken, async (req, res) => {
     try {
         const districts = await Weather.find({},{
             district: 1
@@ -28,7 +29,7 @@ router.get("/districts", async (req, res) => {
     }
 });
 
-router.get("/districts/data", async (req, res) => {
+router.get("/districts/data", verifyToken , async (req, res) => {
     try {
         const weatherData = await Weather.find();
         res.status(200).json(weatherData);
@@ -37,7 +38,7 @@ router.get("/districts/data", async (req, res) => {
     }
 });
 
-router.put("/districts/:id", async (req, res) => {
+router.put("/districts/:id", verifyToken, async (req, res) => {
     try {
         const updatedWeather = await Weather.findByIdAndUpdate(req.params.id, {
             $set: {

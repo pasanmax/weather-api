@@ -23,7 +23,12 @@ function generateRandomAirPressure() {
   
 async function getDistrictsFromDatabase() {
     try {
-        const response = await axios.get(process.env.API_URL)
+
+        const headers = {
+            'token': process.env.token
+        };
+
+        const response = await axios.get(process.env.API_URL, { headers })
             .then(res => { return res.data });
 
         //this.districts = response;
@@ -53,7 +58,11 @@ async function getDistrictsFromDatabase() {
                 "randomAirPressure": randomAirPressure
             };
 
-            await axios.put(process.env.API_URL + data._id, bodyData).then(res => {
+            const headers = {
+                'token': process.env.token
+            };
+
+            await axios.put(process.env.API_URL + data._id, bodyData, { headers }).then(res => {
                 //console.log("Updated data");
             })
 
