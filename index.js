@@ -27,7 +27,7 @@ app.listen(PORT, () => {
     console.log(`API is running on port ${PORT}!`);
 });
 
-// cron.schedule("* * * * * *", function() {
-//     dataGenerator.saveRandomValuesToDatabase();
-// });
+cron.schedule("* * * * * *", function() {
+    dataGenerator.saveRandomValuesToDatabase();
+});
 
